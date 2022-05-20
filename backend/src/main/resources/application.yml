@@ -1,0 +1,25 @@
+server:
+  port: 9527 # 這個port號要和Vue前端的vue.config.js內的devServer相同
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: abby0718
+    url: jdbc:mysql://localhost:3306/exam?characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Taipei
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+# 攔截器
+interceptors:
+  # 不需要授權就能打的API
+  auth-ignore-uris: /api/user/register,/api/user/login
+
+logging:
+  level:
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
