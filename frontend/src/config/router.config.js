@@ -3,12 +3,11 @@ import { UserLayout, BasicLayout, RouteView, BlankLayout, PageView } from '../la
 import { examList, examAdmin, questionAdmin } from '../core/icons'
 
 export const asyncRouterMap = [
-
   {
     path: '/',
     name: 'index',
     component: BasicLayout,
-    meta: { title: '在线考试系统' },
+    meta: { title: 'Abby.com 線上考試系統' },
     redirect: '/dashboard/home',
     children: [
       // dashboard
@@ -18,13 +17,13 @@ export const asyncRouterMap = [
         redirect: '/dashboard/home',
         component: RouteView,
         hideChildrenInMenu: true,
-        meta: { title: '首页', keepAlive: true, icon: 'home', permission: ['dashboard'] },
+        meta: { title: '首頁', keepAlive: true, icon: 'home', permission: ['dashboard'] },
         children: [
           {
             path: '/dashboard/home',
             name: 'Workplace',
             component: () => import('../views/Home'),
-            meta: { title: '简介', keepAlive: true, permission: ['dashboard'] }
+            meta: { title: '簡介', keepAlive: true, permission: ['dashboard'] }
           }
         ]
       },
@@ -35,13 +34,13 @@ export const asyncRouterMap = [
         redirect: '/list/exam-card',
         component: PageView,
         hideChildrenInMenu: true,
-        meta: { title: '考试卡片', keepAlive: true, icon: examList, permission: ['exam-card'] },
+        meta: { title: '待考科目', keepAlive: true, icon: examList, permission: ['exam-card'] },
         children: [
           {
             path: '/list/exam-card',
             name: 'ExamCardList',
             component: () => import('../views/list/ExamCardList'),
-            meta: { title: '考试卡片列表', keepAlive: true, permission: ['exam-card'] }
+            meta: { title: '待考科目列表', keepAlive: true, permission: ['exam-card'] }
           }
         ]
       },
@@ -51,14 +50,14 @@ export const asyncRouterMap = [
         redirect: '/list/question-table-list',
         component: PageView,
         hideChildrenInMenu: true,
-        meta: { title: '问题管理', keepAlive: true, icon: questionAdmin, permission: ['question-admin'] },
+        meta: { title: '考題管理', keepAlive: true, icon: questionAdmin, permission: ['question-admin'] },
         children: [
           {
             path: '/list/question-table-list',
             name: 'QuestionTableListWrapper',
-            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            hideChildrenInMenu: true, // 強制顯示 MenuItem 而不是 SubMenu
             component: () => import('../views/list/QuestionTableList'),
-            meta: { title: '问题列表', keepAlive: true, permission: ['question-admin'] }
+            meta: { title: '考題列表', keepAlive: true, permission: ['question-admin'] }
           }
         ]
       },
@@ -69,14 +68,14 @@ export const asyncRouterMap = [
         component: PageView,
         redirect: '/list/exam-table-list',
         hideChildrenInMenu: true,
-        meta: { title: '考试管理', icon: examAdmin, permission: ['exam-table-list'] },
+        meta: { title: '考試管理', icon: examAdmin, permission: ['exam-table-list'] },
         children: [
           {
             path: '/list/exam-table-list',
             name: 'ExamTableListWrapper',
-            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            hideChildrenInMenu: true,
             component: () => import('../views/list/ExamTableList'),
-            meta: { title: '考试列表', keepAlive: true, permission: ['exam-table-list'] }
+            meta: { title: '考試列表', keepAlive: true, permission: ['exam-table-list'] }
           }
         ]
       },
@@ -86,13 +85,13 @@ export const asyncRouterMap = [
         redirect: '/list/exam-record-list',
         component: PageView,
         hideChildrenInMenu: true,
-        meta: { title: '我的考试', keepAlive: true, icon: 'user', permission: ['exam-record-list'] },
+        meta: { title: '我的考試紀錄', keepAlive: true, icon: 'user', permission: ['exam-record-list'] },
         children: [
           {
             path: '/list/exam-record-list',
             name: 'ExamRecordList',
             component: () => import('../views/list/ExamRecordList'),
-            meta: { title: '我参与过的考试列表', keepAlive: true, permission: ['exam-record-list'] }
+            meta: { title: '參加過的考試列表', keepAlive: true, permission: ['exam-record-list'] }
           }
         ]
       },
@@ -102,15 +101,15 @@ export const asyncRouterMap = [
         component: RouteView,
         redirect: '/account/center',
         name: 'account',
-        // 隐藏当前菜单，但是因为是需要的，所以不能删掉
+        // 隱藏這個路徑，但因為是需要的，所以不能删掉
         hidden: true,
-        meta: { title: '个人页', icon: 'user', keepAlive: true, permission: ['user'] },
+        meta: { title: '個人頁面', icon: 'user', keepAlive: true, permission: ['user'] },
         children: [
           {
             path: '/account/settings',
             name: 'settings',
             component: () => import('../views/account/settings/Index'),
-            meta: { title: '个人设置', hideHeader: true, permission: ['user'] },
+            meta: { title: '個人設定', hideHeader: true, permission: ['user'] },
             redirect: '/account/settings/base',
             hideChildrenInMenu: true,
             children: [
@@ -118,13 +117,13 @@ export const asyncRouterMap = [
                 path: '/account/settings/base',
                 name: 'BaseSettings',
                 component: () => import('../views/account/settings/BaseSetting'),
-                meta: { title: '基本设置', hidden: true, permission: ['user'] }
+                meta: { title: '基本設定', hidden: true, permission: ['user'] }
               },
               {
                 path: '/account/settings/custom',
                 name: 'CustomSettings',
                 component: () => import('../views/account/settings/Custom'),
-                meta: { title: '个性化设置', hidden: true, keepAlive: true, permission: ['user'] }
+                meta: { title: '個性化設定', hidden: true, keepAlive: true, permission: ['user'] }
               }
             ]
           }
@@ -133,15 +132,11 @@ export const asyncRouterMap = [
     ]
   },
   {
-    // 所有访问不到的路径最终都会落到404里
+    // 讀不到的路徑都進404
     path: '*', redirect: '/404', hidden: true
   }
 ]
 
-/**
- * 基础路由，不在主菜单上展示，独立的路由
- * @type { *[] }
- */
 export const constantRouterMap = [
   {
     path: '/user',

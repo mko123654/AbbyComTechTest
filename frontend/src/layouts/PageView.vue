@@ -24,9 +24,9 @@
         <div class="page-menu-search" v-if="search">
           <a-input-search
             style="width: 80%; max-width: 522px;"
-            placeholder="请输入..."
+            placeholder="請輸入..."
             size="large"
-            enterButton="搜索"
+            enterButton="搜尋"
           />
         </div>
         <div class="page-menu-tabs" v-if="tabs && tabs.items">

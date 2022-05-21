@@ -9,10 +9,10 @@ import {
   ACCESS_TOKEN
 } from '../store/mutation-types'
 
-// 创建 axios 实例
+// axios 物件
 const service = axios.create({
   baseURL: '/api', // api base_url
-  timeout: 6000 // 请求超时时间
+  timeout: 6000
 })
 
 const err = (error) => {
@@ -45,8 +45,8 @@ const err = (error) => {
 // request interceptor
 service.interceptors.request.use(config => {
   const token = Vue.ls.get(ACCESS_TOKEN)
-  if (token) { // 如果localStorage中有"Access-Token"属性，就在请求头里加上
-    config.headers['Access-Token'] = token // 让每个请求携带自定义 token 请根据实际情况自行修改
+  if (token) { // 如果localStorage中有"Access-Token"屬性，就在request header加上
+    config.headers['Access-Token'] = token
   }
   return config
 }, err)

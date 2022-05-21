@@ -1,7 +1,7 @@
 import { asyncRouterMap, constantRouterMap } from '../../config/router.config'
 
 /**
- * 过滤账户是否拥有某一个权限，并将菜单从加载列表移除
+ * 過濾帳號是否擁有權限，並加Menu從顯示列表內移除
  *
  * @param permission
  * @param route
@@ -22,7 +22,7 @@ function hasPermission (permission, route) {
 }
 
 /**
- * 单账户多角色时，使用该方法可过滤角色不存在的菜单
+ * 當帳戶有多個角色時，使用該方法可過濾角色不存在的權限的Menu
  *
  * @param roles
  * @param route

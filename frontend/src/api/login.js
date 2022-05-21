@@ -14,7 +14,6 @@ import { axios } from '../utils/request'
  */
 export function login (parameter) {
   return axios({
-    // 用户登录接口改成自己的
     url: api.UserLogin,
     method: 'post',
     data: parameter

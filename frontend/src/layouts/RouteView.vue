@@ -20,9 +20,9 @@ export default {
     const notKeep = (
       <router-view />
     )
-    // 这里增加了 multiTab 的判断，当开启了 multiTab 时
-    // 应当全部组件皆缓存，否则会导致切换页面后页面还原成原始状态
-    // 若确实不需要，可改为 return meta.keepAlive ? inKeep : notKeep
+    // 這邊加了 multiTab 的判斷式，當開啟 multiTab 時
+    // 應該要全部的元件都keepAlive住，否則會出現切換頁面後還原成原始狀態的BUG
+    // 如果都不需要時，可改為 return meta.keepAlive ? inKeep : notKeep
     if (!getters.multiTab && meta.keepAlive === false) {
       return notKeep
     }

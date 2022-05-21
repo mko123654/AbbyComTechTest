@@ -1,5 +1,3 @@
-// 考试相关的接口，包括考试、问题、选项和评分等接口
-
 import api from './index'
 import { axios } from '../utils/request'
 
@@ -61,7 +59,7 @@ export function getExamAll () {
   })
 }
 
-// 获取所有问题，按照单选、多选和判断进行分类
+// 依單選、多選、是非查詢
 export function getExamQuestionTypeList () {
   return axios({
     url: api.ExamQuestionTypeList,

@@ -5,11 +5,11 @@
         <div class="header">
           <a href="/">
             <img src="../assets/logo.svg" class="logo" alt="logo">
-            <span class="title">Online Exam</span>
+            <span class="title">Abby.com 線上考式系統</span>
           </a>
         </div>
         <div class="desc">
-          基于SpringBoot+Vue实现的在线考试系统
+          Tech spec: JAVA 1.8/SpringBoot/MySQL/Vue/Ant Design Vue
         </div>
       </div>
 
