@@ -7,7 +7,7 @@
     </div>
     <div class="copyright">
       Copyright
-      <a-icon type="copyright" /> 2022 <span>Abby Chang</span>
+      <a-icon type="copyright" /> 2022 <span>Abby Chang</span> based on: https://github.com/andrewgreat/antd-pro-vite-vue3
     </div>
   </div>
 </template>
@@ -24,7 +24,7 @@ export default {
 <style lang="less" scoped>
 .footer {
   padding: 0 16px;
-  margin: 24px 0 24px;
+  margin: 50px 0 50px;
   text-align: center;
 
   .links {

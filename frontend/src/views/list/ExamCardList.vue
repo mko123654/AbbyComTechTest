@@ -28,7 +28,7 @@ export default {
   name: 'ExamCardList',
   data () {
     return {
-      description: '您可以随意点击下面的考试卡片开始一场属于您的考试',
+      description: '請於指定時間內完成以下考試',
       dataSource: []
     }
   },
@@ -41,21 +41,19 @@ export default {
     }
   },
   mounted () {
-    // 从后端数据获取考试列表，适配前端卡片
     getExamCardList().then(res => {
       console.log(res)
       if (res.code === 0) {
         this.dataSource = res.data
       } else {
         this.$notification.error({
-          message: '获取考试列表失败',
+          message: '取得考試列表失敗',
           description: res.msg
         })
       }
     }).catch(err => {
-      // 失败就弹出警告消息
       this.$notification.error({
-        message: '获取考试列表失败',
+        message: '取得考試列表失敗',
         description: err.message
       })
     })

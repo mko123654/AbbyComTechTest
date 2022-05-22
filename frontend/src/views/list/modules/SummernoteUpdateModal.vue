@@ -3,7 +3,7 @@
     <div :id="divId"></div>
     <template slot="footer">
       <a-button key="update" @click="handleUpdate">完成</a-button>
-      <a-button key="cancel" @click="handleCancel">关闭</a-button>
+      <a-button key="cancel" @click="handleCancel">關閉</a-button>
     </template>
   </a-modal>
 </template>
@@ -13,30 +13,28 @@ import '../../../plugins/summernote'
 import $ from 'jquery'
 
 export default {
-  // 编译图片的弹出框，用富文本编辑
   name: 'SummernoteUpdateModal',
   data () {
     return {
       confirmLoading: false,
       visible: false,
-      divId: 'summernote-id', // 富文本组件的id
+      divId: 'summernote-id',
       record: {},
-      key: '', // 键
-      content: '', // 键对应的值，即富文本组件的内容
+      key: '',
+      content: '',
       title: '',
       fn: Function
     }
   },
   updated () {
     this.initSummernote(this.divId)
-    $('#' + this.divId).summernote('code', this.content) // 把初始数据写入进去
+    $('#' + this.divId).summernote('code', this.content)
   },
   methods: {
     initSummernote (divId) {
-      console.log('初始化富文本插件：' + divId)
       $('#' + divId).summernote({
-        lang: 'zh-CN',
-        placeholder: '请输入内容',
+        lang: 'zh-tw',
+        placeholder: '請輸入內容',
         height: 300,
         width: '100%',
         htmlMode: true,
@@ -61,14 +59,13 @@ export default {
       return $('#' + divId).summernote('code', content)
     },
     edit (divId, record, key, title, fn) {
-      this.divId = divId // 初始化元素的id
+      this.divId = divId
       this.visible = true
-      // 把当前的记录赋值到data中的变量
       Object.assign(this.record, record)
       this.key = key
-      this.content = this.record[key] // 拿到键为key对应的属性值
+      this.content = this.record[key]
       this.title = title
-      this.fn = fn // 自定义更新函数
+      this.fn = fn
     },
     handleCancel () {
       this.visible = false
@@ -77,21 +74,18 @@ export default {
       const that = this
       that.record[that.key] = $('#' + that.divId).summernote('code')
       that.fn(that.record).then(res => {
-        // 成功就跳转到结果页面
         console.log(res)
         if (res.code === 0) {
           that.$notification.success({
             message: '更新成功',
             description: '更新成功'
           })
-          // 关闭弹出框
           that.visible = false
           that.$emit('ok')
         }
       }).catch(err => {
-        // 失败就弹出警告消息
         that.$notification.error({
-          message: '更新失败',
+          message: '更新失敗',
           description: err.message
         })
       })

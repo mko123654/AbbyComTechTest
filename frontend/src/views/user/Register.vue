@@ -46,7 +46,7 @@
       <a-form-item>
         <a-input
           size="large"
-          placeholder="11 位手机号"
+          placeholder="e.g. 0911654321"
           v-decorator="['mobile', {rules: [{ required: true, message: '請輸入正確的手機號碼', pattern: /[0-9]{8}$/ }, { validator: this.handlePhoneCheck } ], validateTrigger: ['change', 'blur'] }]"
         >
           <a-select slot="addonBefore" size="large" defaultValue="+886">
@@ -61,8 +61,8 @@
             <a-input
               size="large"
               type="text"
-              placeholder="驗證碼"
-              v-decorator="['captcha', {rules: [{ required: true, message: '請輸入驗證碼' }], validateTrigger: 'blur'}]"
+              placeholder="未實作，隨意輸入 6 位數字"
+              v-decorator="['captcha', {rules: [{ required: true, message: '未實作，隨意輸入 6 位數字' }], validateTrigger: 'blur'}]"
             >
               <a-icon slot="prefix" type="mail" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
@@ -271,7 +271,9 @@ export default {
   },
   watch: {
     'state.passwordLevel' (val) {
-      console.log(val)
+      if (val >= 2) {
+        this.state.passwordLevelChecked = false
+      }
     }
   }
 }

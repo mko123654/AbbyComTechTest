@@ -1,10 +1,9 @@
 <template>
-  <a-modal title="编辑封面" :width="400" :visible="visible" :confirmLoading="confirmLoading" @cancel="handleCancel">
-    <p>截图直接粘贴到下面即可，建议图片不要大于80*80</p>
+  <a-modal title="編輯方面" :width="400" :visible="visible" :confirmLoading="confirmLoading" @cancel="handleCancel">
     <div id="summernote-exam-avatar"></div>
     <template slot="footer">
       <a-button key="update" @click="handleUpdate">完成</a-button>
-      <a-button key="cancel" @click="handleCancel">关闭</a-button>
+      <a-button key="cancel" @click="handleCancel">關閉</a-button>
     </template>
   </a-modal>
 </template>
@@ -15,26 +14,23 @@ import '../../../plugins/summernote'
 import $ from 'jquery'
 
 export default {
-  // 编译图片的弹出框，用富文本编辑
   name: 'UpdateAvatarModal',
   data () {
     return {
       confirmLoading: false,
       visible: false,
-      // 每个问题
       exam: {}
     }
   },
   updated () {
     this.initSummernote()
-    $('#summernote-exam-avatar').summernote('code', this.exam.avatar) // 把图片数据写入进去
+    $('#summernote-exam-avatar').summernote('code', this.exam.avatar)
   },
   methods: {
     initSummernote () {
-      console.log('初始化富文本插件')
       $('#summernote-exam-avatar').summernote({
-        lang: 'zh-CN',
-        placeholder: '请输入内容',
+        lang: 'zh-tw',
+        placeholder: '請輸入內容',
         height: 200,
         width: 320,
         htmlMode: true,
@@ -49,7 +45,6 @@ export default {
     },
     edit (exam) {
       this.visible = true
-      // 把当前的记录赋值到data中的变量
       Object.assign(this.exam, exam)
       this.avatar = exam.avatar
     },
@@ -61,21 +56,18 @@ export default {
       const that = this
       that.exam.avatar = $('#summernote-exam-avatar').summernote('code')
       examUpdate(that.exam).then(res => {
-        // 成功就跳转到结果页面
         console.log(res)
         if (res.code === 0) {
           that.$notification.success({
             message: '更新成功',
-            description: '考试更新成功'
+            description: '考試更新成功'
           })
-          // 关闭弹出框
           that.visible = false
           that.$emit('ok')
         }
       }).catch(err => {
-        // 失败就弹出警告消息
         that.$notification.error({
-          message: '考试更新失败',
+          message: '考試更新失敗',
           description: err.message
         })
       })

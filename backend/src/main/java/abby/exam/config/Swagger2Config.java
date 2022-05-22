@@ -50,12 +50,11 @@ public class Swagger2Config {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("online exam by springboot")
-                .description("線上考試系統 by Abby Chang at 2022")
-                //TODO：更改gitHub地址
-                .termsOfServiceUrl("https://github.com/19920625lsg/spring-boot-online-exam")
+                .title("AbbyComTechTest")
+                .description("create by Abby Chang at 2022 based on： https://github.com/andrewgreat/antd-pro-vite-vue3")
+                .termsOfServiceUrl("https://github.com/mko123654/AbbyComTechTest")
                 .version("1.0")
-                .contact(new Contact("Abby Chang", "git路徑", "mko123654@gmail.com"))
+                .contact(new Contact("Abby Chang", "https://github.com/mko123654/AbbyComTechTest", "mko123654@gmail.com"))
                 .build();
     }
 }

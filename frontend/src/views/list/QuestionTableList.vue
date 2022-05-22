@@ -1,8 +1,8 @@
 <template>
   <a-card :bordered="false">
     <div id="toolbar">
-      <a-button type="primary" icon="plus" @click="$refs.createQuestionModal.create()">新建</a-button>&nbsp;
-      <a-button type="primary" icon="reload" @click="loadAll()">全量刷新</a-button>
+      <a-button type="primary" icon="plus" @click="$refs.createQuestionModal.create()">新增</a-button>&nbsp;
+      <a-button type="primary" icon="reload" @click="loadAll()">重整</a-button>
     </div>
     <BootstrapTable
       ref="table"
@@ -10,7 +10,6 @@
       :data="tableData"
       :options="options"
     />
-    <!-- ref是为了方便用this.$refs.modal直接引用，下同 -->
     <step-by-step-question-modal ref="createQuestionModal" @ok="handleOk" />
     <summernote-update-modal ref="questionUpdateModal" @ok="handleOk" />
     <question-view-modal ref="modalView" @ok="handleOk" />
@@ -36,19 +35,18 @@ export default {
     QuestionEditModal
   },
   data () {
-    const that = this // 方便在bootstrap-table中引用methods
+    const that = this
     return {
-      // 表头
       columns: [
         {
-          title: '序号',
+          title: '序號',
           field: 'serial',
           formatter: function (value, row, index) {
-            return index + 1 // 这样的话每翻一页都会重新从1开始，
+            return index + 1
           }
         },
         {
-          title: '题干',
+          title: '題目',
           field: 'name',
           width: 200,
           formatter: (value, row) => {
@@ -56,7 +54,7 @@ export default {
           },
           events: {
             'click .question-name': function (e, value, row, index) {
-              that.$refs.questionUpdateModal.edit('summernote-question-name-update', row, 'name', '更新题干', questionUpdate)
+              that.$refs.questionUpdateModal.edit('summernote-question-name-update', row, 'name', '更新題目', questionUpdate)
             }
           }
         },
@@ -69,37 +67,37 @@ export default {
           },
           events: {
             'click .question-desc': function (e, value, row, index) {
-              that.$refs.questionUpdateModal.edit('summernote-question-desc-update', row, 'description', '更新题目解析', questionUpdate)
+              that.$refs.questionUpdateModal.edit('summernote-question-desc-update', row, 'description', '更新題目解析', questionUpdate)
             }
           }
         },
         {
-          title: '分数',
+          title: '分數',
           field: 'score',
           formatter: (value, row) => {
             return '<div class="question-score">' + value + '</div>'
           },
           events: {
             'click .question-score': function (e, value, row, index) {
-              const $element = $(e.target) // 把元素转换成html对象
+              const $element = $(e.target) // 把元素轉換成html
               $element.html('<input type="text" value="' + value + '">')
             }
           }
         },
         {
-          title: '创建人',
+          title: '建立人員',
           field: 'creator'
         },
         {
-          title: '难度',
+          title: '難度',
           field: 'level',
           formatter: (value, row) => {
             return '<div class="question-level">' + value + '</div>'
           },
           events: {
             'click .question-level': function (e, value, row, index) {
-              const $element = $(e.target) // 把元素转换成html对象
-              if ($element.children().length > 0) return // 防止重复渲染
+              const $element = $(e.target)
+              if ($element.children().length > 0) return // 防止重複渲染
               getQuestionSelection().then(res => {
                 console.log(res)
                 if (res.code === 0) {
@@ -108,7 +106,7 @@ export default {
                   let inner = '<select>'
                   for (let i = 0; i < levels.length; i++) {
                     if (levels[i].description === value) {
-                      // 设置默认的选中值为当前的值
+                      // 設定預設的值為目前的值
                       inner += '<option value ="' + levels[i].id + '" name="' + levels[i].name + '" selected="selected">' + levels[i].description + '</option>'
                     } else {
                       inner += '<option value ="' + levels[i].id + '" name="' + levels[i].name + '">' + levels[i].description + '</option>'
@@ -118,7 +116,7 @@ export default {
                   $element.html(inner)
                 } else {
                   that.$notification.error({
-                    message: '获取问题下拉选项失败',
+                    message: '取得考題下拉選單失敗',
                     description: res.msg
                   })
                 }
@@ -127,15 +125,15 @@ export default {
           }
         },
         {
-          title: '题型',
+          title: '題型',
           field: 'type',
           formatter: (value, row) => {
             return '<div class="question-type">' + value + '</div>'
           },
           events: {
             'click .question-type': function (e, value, row, index) {
-              const $element = $(e.target) // 把元素转换成html对象
-              if ($element.children().length > 0) return // 防止重复渲染
+              const $element = $(e.target)
+              if ($element.children().length > 0) return
               getQuestionSelection().then(res => {
                 console.log(res)
                 if (res.code === 0) {
@@ -144,7 +142,6 @@ export default {
                   let inner = '<select>'
                   for (let i = 0; i < types.length; i++) {
                     if (types[i].description === value) {
-                      // 设置默认的选中值为当前的值
                       inner += '<option value ="' + types[i].id + '" name="' + types[i].name + '" selected="selected">' + types[i].description + '</option>'
                     } else {
                       inner += '<option value ="' + types[i].id + '" name="' + types[i].name + '">' + types[i].description + '</option>'
@@ -154,7 +151,7 @@ export default {
                   $element.html(inner)
                 } else {
                   that.$notification.error({
-                    message: '获取问题下拉选项失败',
+                    message: '取得考題下拉選單失敗',
                     description: res.msg
                   })
                 }
@@ -163,15 +160,15 @@ export default {
           }
         },
         {
-          title: '学科',
+          title: '科目',
           field: 'category',
           formatter: (value, row) => {
             return '<div class="question-category">' + value + '</div>'
           },
           events: {
             'click .question-category': function (e, value, row, index) {
-              const $element = $(e.target) // 把元素转换成html对象
-              if ($element.children().length > 0) return // 防止重复渲染
+              const $element = $(e.target)
+              if ($element.children().length > 0) return
               getQuestionSelection().then(res => {
                 console.log(res)
                 if (res.code === 0) {
@@ -179,8 +176,7 @@ export default {
                   const categories = res.data.categories
                   let inner = '<select>'
                   for (let i = 0; i < categories.length; i++) {
-                    if (categories[i].name === value) { // 学科还是用名字吧
-                      // 设置默认的选中值为当前的值
+                    if (categories[i].name === value) {
                       inner += '<option value ="' + categories[i].id + '" name="' + categories[i].description + '" selected="selected">' + categories[i].name + '</option>'
                     } else {
                       inner += '<option value ="' + categories[i].id + '" name="' + categories[i].description + '">' + categories[i].name + '</option>'
@@ -190,7 +186,7 @@ export default {
                   $element.html(inner)
                 } else {
                   that.$notification.error({
-                    message: '获取问题下拉选项失败',
+                    message: '取得問題下拉選單失敗',
                     description: res.msg
                   })
                 }
@@ -199,7 +195,7 @@ export default {
           }
         },
         {
-          title: '更新时间',
+          title: '更新時間',
           field: 'updateTime'
         },
         {
@@ -207,9 +203,9 @@ export default {
           field: 'action',
           align: 'center',
           formatter: (value, row) => {
-            return '<button type="button" class="btn btn-success view-question">详情</button>' +
+            return '<button type="button" class="btn btn-success view-question">詳情</button>' +
               '&nbsp;&nbsp;' +
-              '<button type="button" class="btn btn-success edit-question">编辑</button>'
+              '<button type="button" class="btn btn-success edit-question">編輯</button>'
           },
           events: {
             'click .view-question': function (e, value, row, index) {
@@ -221,7 +217,7 @@ export default {
           }
         }
       ],
-      tableData: [], // bootstrap-table的数据
+      tableData: [],
       // custom bootstrap-table
       options: {
         search: true,
@@ -229,39 +225,36 @@ export default {
         showExport: true,
         pagination: true,
         toolbar: '#toolbar',
-        // 下面两行是支持高级搜索，即按照字段搜索
         advancedSearch: true,
         idTable: 'advancedTable',
-        // 下面是常用的事件，更多的点击事件可以参考：http://www.itxst.com/bootstrap-table-events/tutorial.html
+        // http://www.itxst.com/bootstrap-table-events/tutorial.html
         // onClickRow: that.clickRow,
-        // onClickCell: that.clickCell // 单元格单击事件
-        onDblClickCell: that.dblClickCell // 单元格双击事件
+        // onClickCell: that.clickCell
+        onDblClickCell: that.dblClickCell
       }
     }
   },
   mounted () {
-    this.loadAll() // 加载所有问题的数据
+    this.loadAll()
   },
   methods: {
     handleEdit (record) {
       this.$refs.modalEdit.edit(record)
     },
     handleSub (record) {
-      // 查看题目
       console.log(record)
       this.$refs.modalView.edit(record)
     },
     handleOk () {
-      this.loadAll() // 加载所有问题的数据
+      this.loadAll()
     },
     dblClickCell (field, value, row, $element) {
-      if (field === 'score') { // 更新分数
-        const childrenInput = $element.children('.question-score').children('input') // 获取输入框的值
+      if (field === 'score') {
+        const childrenInput = $element.children('.question-score').children('input')
         if (childrenInput.length === 0) return
         row.score = childrenInput[0].value
         const that = this
         questionUpdate(row).then(res => {
-          // 成功就跳转到结果页面
           console.log(res)
           if (res.code === 0) {
             $element.children('.question-score').text(row.score)
@@ -273,8 +266,8 @@ export default {
         })
       }
 
-      if (field === 'level') { // 更新难度
-        const childrenSelect = $element.children('.question-level').children('select') // 获取输入框的值
+      if (field === 'level') {
+        const childrenSelect = $element.children('.question-level').children('select')
         if (childrenSelect.length === 0) return
         const optionSelected = $(childrenSelect[0]).find('option:selected')
         row.levelId = optionSelected.val()
@@ -283,7 +276,6 @@ export default {
         console.log(row.level)
         const that = this
         questionUpdate(row).then(res => {
-          // 成功就跳转到结果页面
           console.log(res)
           if (res.code === 0) {
             $element.children('.question-level').text(row.level)
@@ -295,15 +287,14 @@ export default {
         })
       }
 
-      if (field === 'type') { // 更新题型
-        const childrenSelect = $element.children('.question-type').children('select') // 获取输入框的值
+      if (field === 'type') {
+        const childrenSelect = $element.children('.question-type').children('select')
         if (childrenSelect.length === 0) return
         const optionSelected = $(childrenSelect[0]).find('option:selected')
         row.typeId = optionSelected.val()
         row.type = optionSelected.text()
         const that = this
         questionUpdate(row).then(res => {
-          // 成功就跳转到结果页面
           console.log(res)
           if (res.code === 0) {
             $element.children('.question-type').text(row.type)
@@ -315,8 +306,8 @@ export default {
         })
       }
 
-      if (field === 'category') { // 更新学科
-        const childrenSelect = $element.children('.question-category').children('select') // 获取输入框的值
+      if (field === 'category') {
+        const childrenSelect = $element.children('.question-category').children('select')
         console.log(childrenSelect)
         if (childrenSelect.length === 0) return
         const optionSelected = $(childrenSelect[0]).find('option:selected')
@@ -324,7 +315,6 @@ export default {
         row.category = optionSelected.text()
         const that = this
         questionUpdate(row).then(res => {
-          // 成功就跳转到结果页面
           console.log(res)
           if (res.code === 0) {
             $element.children('.question-category').text(row.category)
@@ -345,7 +335,7 @@ export default {
             that.$refs.table._initTable()
           } else {
             that.$notification.error({
-              message: '获取全部问题的列表失败',
+              message: '取得全部考題列表失敗',
               description: res.msg
             })
           }

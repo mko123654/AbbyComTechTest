@@ -1,7 +1,6 @@
 <template>
   <a-layout>
     <a-layout-header class="header" style="color: #fff">
-      <!--   v-if="examDetail.exam" 是为了防止 异步请求时页面渲染的时候还没有拿到这个值而报错， 下面多处这个判断都是这个道理 -->
       <span style="font-size:25px;margin-left: 0px;" v-if="examDetail.exam">
         <a-avatar slot="avatar" size="large" shape="circle" :src="examDetail.exam.examAvatar | imgSrcFilter"/>
         {{ examDetail.exam.examName }}
@@ -9,8 +8,8 @@
       </span>
       <span style="float: right;">
         <span style="margin-right: 40px; font-size: 20px" v-if="recordDetail.examRecord">
-          考试得分：<span style="color: red">{{ recordDetail.examRecord.examJoinScore }}</span>&nbsp;分&nbsp;
-          <span style="font-size:15px;">参加考试时间：{{ recordDetail.examRecord.examJoinDate }}</span>
+          考試得分：<span style="color: red">{{ recordDetail.examRecord.examJoinScore }}</span>&nbsp;分&nbsp;
+          <span style="font-size:15px;">參加考試時間：{{ recordDetail.examRecord.examJoinDate }}</span>
         </span>
         <a-avatar class="avatar" size="small" :src="avatar()"/>
         <span style="margin-left: 12px">{{ nickname() }}</span>
@@ -25,27 +24,27 @@
           :style="{ height: '100%', borderRight: 0 }"
         >
           <a-sub-menu key="question_radio">
-            <span slot="title" v-if="examDetail.exam"><a-icon type="check-circle" theme="twoTone"/>单选题(每题{{ examDetail.exam.examScoreRadio }}分)</span>
+            <span slot="title" v-if="examDetail.exam"><a-icon type="check-circle" theme="twoTone"/>單選題(每題{{ examDetail.exam.examScoreRadio }}分)</span>
             <a-menu-item v-for="(item, index) in examDetail.radioIds" :key="item" @click="getQuestionDetail(item)">
               <a-icon type="check" v-if="resultsMap.get(item)==='True'"/>
               <a-icon type="close" v-if="resultsMap.get(item)==='False'"/>
-              题目{{ index + 1 }}
+              題目{{ index + 1 }}
             </a-menu-item>
           </a-sub-menu>
           <a-sub-menu key="question_check">
-            <span slot="title" v-if="examDetail.exam"><a-icon type="check-square" theme="twoTone"/>多选题(每题{{ examDetail.exam.examScoreCheck }}分)</span>
+            <span slot="title" v-if="examDetail.exam"><a-icon type="check-square" theme="twoTone"/>多選題(每題{{ examDetail.exam.examScoreCheck }}分)</span>
             <a-menu-item v-for="(item, index) in examDetail.checkIds" :key="item" @click="getQuestionDetail(item)">
               <a-icon type="check" v-if="resultsMap.get(item)==='True'"/>
               <a-icon type="close" v-if="resultsMap.get(item)==='False'"/>
-              题目{{ index + 1 }}
+              題目{{ index + 1 }}
             </a-menu-item>
           </a-sub-menu>
           <a-sub-menu key="question_judge">
-            <span slot="title" v-if="examDetail.exam"><a-icon type="like" theme="twoTone"/>判断题(每题{{ examDetail.exam.examScoreJudge }}分)</span>
+            <span slot="title" v-if="examDetail.exam"><a-icon type="like" theme="twoTone"/>是非題(每題{{ examDetail.exam.examScoreJudge }}分)</span>
             <a-menu-item v-for="(item, index) in examDetail.judgeIds" :key="item" @click="getQuestionDetail(item)">
               <a-icon type="check" v-if="resultsMap.get(item)==='True'"/>
               <a-icon type="close" v-if="resultsMap.get(item)==='False'"/>
-              题目{{ index + 1 }}
+              題目{{ index + 1 }}
             </a-menu-item>
           </a-sub-menu>
         </a-menu>
@@ -53,23 +52,22 @@
       <a-layout :style="{ marginLeft: '200px' }">
         <a-layout-content :style="{ margin: '24px 16px 0',height: '84vh', overflow: 'initial' }">
           <div :style="{ padding: '24px', background: '#fff',height: '84vh'}">
-            <span v-if="currentQuestion === ''" style="font-size: 30px;font-family: Consolas">欢迎查看本次考试情况，点击左侧题目编号可以查看答题详情</span>
+            <span v-if="currentQuestion === ''" style="font-size: 30px;font-family: Consolas">歡迎查看本次考試情况，點擊左測題目編號可以查看答題詳情</span>
             <span v-if="currentQuestion !== ''">
               <strong>{{ currentQuestion.type }} </strong> <p v-html="currentQuestion.name"></p>
-              <strong style="color: green;" v-if="questionRight">本题您答对啦！</strong>
-              <strong style="color: red;" v-if="!questionRight">本题您答错啦！</strong>
+              <strong style="color: green;" v-if="questionRight">答對！</strong>
+              <strong style="color: red;" v-if="!questionRight">答錯！</strong>
             </span>
             <br><br>
-            <!-- 单选题和判断题 --> <!-- key不重复只需要在一个for循环中保证即可 -->
-            <a-radio-group v-model="radioValue" v-if="currentQuestion.type === '单选题' || currentQuestion.type === '判断题'">
+            <a-radio-group v-model="radioValue" v-if="currentQuestion.type === '單選題' || currentQuestion.type === '是非題'">
               <a-radio v-for="option in currentQuestion.options" :key="option.questionOptionId" :style="optionStyle" :value="option.questionOptionId">
                 {{ option.questionOptionContent }}
               </a-radio>
             </a-radio-group>
 
-            <!-- 题目出错的时候才显示这块 -->
-            <div v-if="!questionRight && currentQuestion!=='' && (currentQuestion.type === '单选题' || currentQuestion.type === '判断题')">
-              <span style="color: red;"><br/>正确答案是：<br/></span>
+            <!-- 答錯時顯示 -->
+            <div v-if="!questionRight && currentQuestion!=='' && (currentQuestion.type === '單選題' || currentQuestion.type === '是非題')">
+              <span style="color: red;"><br/>正確答案為：<br/></span>
               <a-radio-group v-model="radioRightValue">
                 <a-radio v-for="option in currentQuestion.options" :key="option.questionOptionId" :style="optionStyle" :value="option.questionOptionId">
                   {{ option.questionOptionContent }}
@@ -77,16 +75,16 @@
               </a-radio-group>
             </div>
 
-            <!-- 多选题 -->
-            <a-checkbox-group v-model="checkValues" v-if="currentQuestion.type === '多选题'">
+            <!-- 多選 -->
+            <a-checkbox-group v-model="checkValues" v-if="currentQuestion.type === '多選題'">
               <a-checkbox v-for="option in currentQuestion.options" :key="option.questionOptionId" :style="optionStyle" :value="option.questionOptionId">
                 {{ option.questionOptionContent }}
               </a-checkbox>
             </a-checkbox-group>
 
-            <!-- 题目出错的时候才显示这块 -->
-            <div v-if="!questionRight && currentQuestion!=='' && currentQuestion.type === '多选题'">
-              <span style="color: red;"><br/>正确答案是：<br/></span>
+            <!-- 答錯時顯示 -->
+            <div v-if="!questionRight && currentQuestion!=='' && currentQuestion.type === '多選題'">
+              <span style="color: red;"><br/>正確答案為：<br/></span>
               <a-checkbox-group v-model="checkRightValues">
                 <a-checkbox v-for="option in currentQuestion.options" :key="option.questionOptionId" :style="optionStyle" :value="option.questionOptionId">
                   {{ option.questionOptionContent }}
@@ -94,12 +92,12 @@
               </a-checkbox-group>
             </div>
 
-            <span style="color: red;"><br/>答案解析：<br/></span>
+            <span style="color: red;"><br/>答案解析：：<br/></span>
             <p v-html="currentQuestion.description"></p>
           </div>
         </a-layout-content>
         <a-layout-footer :style="{ textAlign: 'center' }">
-          Spting Boot Online Exam ©2020 Created by Liang Shan Guang
+          Abby.com Tech Test ©2022 Crated by Abby Chang
         </a-layout-footer>
       </a-layout>
     </a-layout>

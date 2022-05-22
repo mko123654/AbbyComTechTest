@@ -5,11 +5,16 @@
         <div class="header">
           <a href="/">
             <img src="../assets/logo.svg" class="logo" alt="logo">
-            <span class="title">Abby.com 線上考式系統</span>
+            <span class="title">Abby.com 線上考試系統</span>
           </a>
         </div>
         <div class="desc">
-          Tech spec: JAVA 1.8/SpringBoot/MySQL/Vue/Ant Design Vue
+          <div>
+            Tech spec: JAVA 1.8/SpringBoot/MySQL/Vue/Ant Design Vue
+          </div>
+          <div>
+            based on: https://github.com/andrewgreat/antd-pro-vite-vue3
+          </div>
         </div>
       </div>
 
@@ -17,12 +22,12 @@
 
       <div class="footer">
         <div class="links">
-          <a href="https://github.com/19920625lsg/spring-boot-online-exam" target="_blank">代码仓</a>
-          <a href="https://19920625lsg.github.io" target="_blank">关于我</a>
-          <a href="mailto:liangshanguang2@gmail.com">联系我</a>
+          <a href="https://hackmd.io/@mko123654" target="_blank">HackMD</a>
+          <a href="https://github.com/mko123654/AbbyComTechTest" target="_blank">GitHub</a>
+          <a href="mailto:mko123654@gmail.com">E-mail</a>
         </div>
         <div class="copyright">
-          Copyright &copy; 2020 Liang Shan Guang
+          Copyright &copy; 2022 Abby Chang
         </div>
       </div>
     </div>
@@ -109,7 +114,7 @@ export default {
         }
 
         .desc {
-          font-size: 14px;
+          font-size: 16px;
           color: rgba(0, 0, 0, 0.45);
           margin-top: 12px;
           margin-bottom: 40px;
