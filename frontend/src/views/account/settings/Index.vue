@@ -12,12 +12,7 @@
           >
             <a-menu-item key="/account/settings/base">
               <router-link :to="{ name: 'BaseSettings' }">
-                基本设置
-              </router-link>
-            </a-menu-item>
-            <a-menu-item key="/account/settings/custom">
-              <router-link :to="{ name: 'CustomSettings' }">
-                个性化
+                個人資料設定
               </router-link>
             </a-menu-item>
           </a-menu>
@@ -54,17 +49,15 @@ export default {
       // cropper
       preview: {},
       option: {
-        img: '/avatar2.jpg',
+        img: 'avatar2.png',
         info: true,
         size: 1,
         outputType: 'jpeg',
         canScale: false,
         autoCrop: true,
-        // 只有自动截图开启 宽度高度才生效
         autoCropWidth: 180,
         autoCropHeight: 180,
         fixedBox: true,
-        // 开启宽度和高度比例
         fixed: true,
         fixedNumber: [1, 1]
       },

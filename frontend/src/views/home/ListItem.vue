@@ -3,7 +3,7 @@
     <div class="page1-box">
       <div class="page1-point-wrapper"></div>
       <div class="page1-image" :style="{ boxShadow: `${item.shadowColor} 0px 6px 12px` }">
-        <img :src="item.src" />
+        <img :src="item.src" width="70" />
       </div>
       <h3>{{ item.title }}</h3>
       <p>{{ item.content }}</p>

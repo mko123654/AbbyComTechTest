@@ -118,12 +118,6 @@ export const asyncRouterMap = [
                 name: 'BaseSettings',
                 component: () => import('../views/account/settings/BaseSetting'),
                 meta: { title: '基本設定', hidden: true, permission: ['user'] }
-              },
-              {
-                path: '/account/settings/custom',
-                name: 'CustomSettings',
-                component: () => import('../views/account/settings/Custom'),
-                meta: { title: '個性化設定', hidden: true, keepAlive: true, permission: ['user'] }
               }
             ]
           }

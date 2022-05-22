@@ -16,4 +16,4 @@ export const setDocumentTitle = function (title) {
   }
 }
 
-export const domTitle = 'Online Exam'
+export const domTitle = 'Abby.com 線上考試系統'

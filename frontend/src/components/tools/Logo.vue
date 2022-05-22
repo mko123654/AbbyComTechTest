@@ -18,7 +18,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: 'Online Exam',
+      default: 'Abby.com',
       required: false
     },
     showTitle: {
