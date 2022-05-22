@@ -115,8 +115,8 @@ export default {
   },
   methods: {
     /**
-     * 表格重新加载方法
-     * 如果参数为 true, 则强制刷新到第一页
+     * Table重新刷新的方式
+     * 若為 true，則強制回到第一頁
      * @param Boolean bool
      */
     refresh (bool = false) {
@@ -126,10 +126,10 @@ export default {
       this.loadData()
     },
     /**
-     * 加载数据方法
-     * @param {Object} pagination 分页选项器
-     * @param {Object} filters 过滤条件
-     * @param {Object} sorter 排序条件
+     * loadData
+     * @param {Object} pagination 分頁
+     * @param {Object} filters 過濾條件
+     * @param {Object} sorter 排序條件
      */
     loadData (pagination, filters, sorter) {
       this.localLoading = true
@@ -149,29 +149,28 @@ export default {
       }
       )
       const result = this.data(parameter)
-      // 对接自己的通用数据接口需要修改下方代码中的 r.pageNo, r.totalCount, r.data
+      // 接API需自行修改 r.pageNo, r.totalCount, r.data
       // eslint-disable-next-line
       if ((typeof result === 'object' || typeof result === 'function') && typeof result.then === 'function') {
         result.then(r => {
           this.localPagination = Object.assign({}, this.localPagination, {
-            current: r.pageNo, // 返回结果中的当前分页数
-            total: r.totalCount, // 返回结果中的总记录数
+            current: r.pageNo,
+            total: r.totalCount,
             showSizeChanger: this.showSizeChanger,
             pageSize: (pagination && pagination.pageSize) ||
               this.localPagination.pageSize
           })
-          // 为防止删除数据后导致页面当前页面数据长度为 0 ,自动翻页到上一页
+          // 防止刪除data後導致目前頁面長度為0，自動回去上一頁
           if (r.data.length === 0 && this.localPagination.current > 1) {
             this.localPagination.current--
             this.loadData()
             return
           }
 
-          // 这里用于判断接口是否有返回 r.totalCount 或 this.showPagination = false
-          // 当情况满足时，表示数据不满足分页大小，关闭 table 分页功能
-
+          // 判斷API是否有回傳r.totalCount 或 this.showPagination = false
+          // 為true時，表示資料小於分頁大小，關閉table分頁功能
           (!this.showPagination || !r.totalCount && this.showPagination === 'auto') && (this.localPagination.hideOnSinglePage = true)
-          this.localDataSource = r.data // 返回结果中的数组数据
+          this.localDataSource = r.data
           this.localLoading = false
         })
       }
@@ -189,7 +188,7 @@ export default {
       return totalList
     },
     /**
-     * 用于更新已选中的列表数据 total 统计
+     * 用於更新已選重的資料 total 統計
      * @param selectedRowKeys
      * @param selectedRows
      */
@@ -208,7 +207,7 @@ export default {
       })
     },
     /**
-     * 清空 table 已选中项
+     * 清空 table 已選中項
      */
     clearSelected () {
       if (this.rowSelection) {
@@ -217,7 +216,7 @@ export default {
       }
     },
     /**
-     * 处理交给 table 使用者去处理 clear 事件时，内部选中统计同时调用
+     * 處理交給 table 使用者去處理clear 事件時，內部選中統計同時調用
      * @param callback
      * @returns {*}
      */
@@ -231,25 +230,24 @@ export default {
       )
     },
     renderAlert () {
-      // 绘制统计列数据
       const needTotalItems = this.needTotalList.map((item) => {
         return (<span style="margin-right: 12px">
-          {item.title}总计 <a style="font-weight: 600">{!item.customRender ? item.total : item.customRender(item.total)}</a>
+          {item.title}總數 <a style="font-weight: 600">{!item.customRender ? item.total : item.customRender(item.total)}</a>
         </span>)
       })
 
-      // 绘制 清空 按钮
+      // 清空按鈕
       const clearItem = (typeof this.alert.clear === 'boolean' && this.alert.clear) ? (
         this.renderClear(this.clearSelected)
       ) : (this.alert !== null && typeof this.alert.clear === 'function') ? (
         this.renderClear(this.alert.clear)
       ) : null
 
-      // 绘制 alert 组件
+      // alert
       return (
         <a-alert showIcon={true} style="margin-bottom: 16px">
           <template slot="message">
-            <span style="margin-right: 12px">已选择: <a style="font-weight: 600">{this.selectedRows.length}</a></span>
+            <span style="margin-right: 12px">已選擇： <a style="font-weight: 600">{this.selectedRows.length}</a></span>
             {needTotalItems}
             {clearItem}
           </template>
@@ -271,7 +269,7 @@ export default {
       }
       if (k === 'rowSelection') {
         if (showAlert && this.rowSelection) {
-          // 如果需要使用alert，则重新绑定 rowSelection 事件
+          // 如果需要使用alert，則須重新綁定 rowSelection 事件
           props[k] = {
             selectedRows: this.selectedRows,
             selectedRowKeys: this.selectedRowKeys,
@@ -282,7 +280,7 @@ export default {
           }
           return props[k]
         } else if (!this.rowSelection) {
-          // 如果没打算开启 rowSelection 则清空默认的选择项
+          // 如果不打算開啟 rowSelection 澤清空預設的選項
           props[k] = null
           return props[k]
         }

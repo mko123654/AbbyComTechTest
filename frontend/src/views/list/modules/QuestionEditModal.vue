@@ -1,23 +1,23 @@
 <template>
-  <a-modal title="编辑题目" :width="640" :visible="visible" :confirmLoading="confirmLoading" @cancel="handleCancel">
+  <a-modal title="編輯考題" :width="640" :visible="visible" :confirmLoading="confirmLoading" @cancel="handleCancel">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-        <h3><b>题干：</b></h3>
+        <h3><b>題型：</b></h3>
         <div id="summernote-question-name-edit" />
-        <ul v-show="question.type==='多选题'">
+        <ul v-show="question.type==='多選題'">
           <li v-for="option in question.options" :key="option.id">
             <a-input v-model="option.content" />
           </li>
         </ul>
 
-        <ul v-show="question.type!=='多选题'">
+        <ul v-show="question.type!=='多選題'">
           <li v-for="option in question.options" :key="option.id">
             <a-input v-model="option.content" />
           </li>
         </ul>
 
         <h3><b>答案：</b></h3>
-        <ul v-show="question.type!=='多选题'">
+        <ul v-show="question.type!=='多選題'">
           <li>
             <a-select :size="size" :value="answerOptionId" style="width: 100%" @change="handleSingleChange">
               <a-select-option v-for="option in question.options" :key="option.id">
@@ -27,7 +27,7 @@
           </li>
         </ul>
 
-        <ul v-show="question.type==='多选题'">
+        <ul v-show="question.type==='多選題'">
           <li>
             <a-select
               mode="multiple"

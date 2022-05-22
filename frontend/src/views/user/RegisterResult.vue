@@ -6,8 +6,7 @@
     :description="description">
 
     <template slot="action">
-      <a-button size="large" type="primary">查看邮箱</a-button>
-      <a-button size="large" style="margin-left: 8px" @click="goHomeHandle">返回首页</a-button>
+      <a-button size="large" style="margin-left: 8px" @click="goHomeHandle">返回首頁</a-button>
     </template>
 
   </result>
@@ -23,14 +22,14 @@ export default {
   },
   data () {
     return {
-      description: '激活邮件已发送到你的邮箱中，邮件有效期为24小时。请及时登录邮箱，点击邮件中的链接激活帐户。',
+      description: '帳號啟用驗證信件已寄發至註冊E-mail，請於24小時內確認點擊啟用連結。',
       form: {}
     }
   },
   computed: {
     email () {
       const v = this.form && this.form.email || 'xxx'
-      const title = `你的账户：${v} 注册成功`
+      const title = `您的帳號：${v} 註冊成功`
       return title
     }
   },

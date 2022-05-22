@@ -1,13 +1,13 @@
 <template>
   <div class="main user-layout-register">
-    <h3><span>注册</span></h3>
+    <h3><span>註冊帳號</span></h3>
     <a-form ref="formRegister" :form="form" id="formRegister">
       <a-form-item>
         <a-input
           size="large"
           type="text"
-          placeholder="邮箱"
-          v-decorator="['email', {rules: [{ required: true, type: 'email', message: '请输入邮箱地址' }], validateTrigger: ['change', 'blur']}]"
+          placeholder="E-mail"
+          v-decorator="['email', {rules: [{ required: true, type: 'email', message: '請輸入E-mail' }], validateTrigger: ['change', 'blur']}]"
         ></a-input>
       </a-form-item>
 
@@ -17,7 +17,7 @@
             <div :class="['user-register', passwordLevelClass]">强度：<span>{{ passwordLevelName }}</span></div>
             <a-progress :percent="state.percent" :showInfo="false" :strokeColor=" passwordLevelColor "/>
             <div style="margin-top: 10px;">
-              <span>请至少输入 6 个字符。请不要使用容易被猜到的密码。</span>
+              <span>至少輸入 6 個英文字母+數字</span>
             </div>
           </div>
         </template>
@@ -27,8 +27,8 @@
             type="password"
             @click="handlePasswordInputClick"
             autocomplete="false"
-            placeholder="至少6位密码，区分大小写"
-            v-decorator="['password', {rules: [{ required: true, message: '至少6位密码，区分大小写'}, { validator: this.handlePasswordLevel }], validateTrigger: ['change', 'blur']}]"
+            placeholder="至少輸入 6 個英文字母+數字"
+            v-decorator="['password', {rules: [{ required: true, message: '至少輸入 6 個英文字母+數字'}, { validator: this.handlePasswordLevel }], validateTrigger: ['change', 'blur']}]"
           ></a-input>
         </a-form-item>
       </a-popover>
@@ -38,8 +38,8 @@
           size="large"
           type="password"
           autocomplete="false"
-          placeholder="确认密码"
-          v-decorator="['password2', {rules: [{ required: true, message: '至少6位密码，区分大小写' }, { validator: this.handlePasswordCheck }], validateTrigger: ['change', 'blur']}]"
+          placeholder="確認密碼"
+          v-decorator="['password2', {rules: [{ required: true, message: '至少輸入 6 個英文字母+數字' }, { validator: this.handlePasswordCheck }], validateTrigger: ['change', 'blur']}]"
         ></a-input>
       </a-form-item>
 
@@ -47,11 +47,11 @@
         <a-input
           size="large"
           placeholder="11 位手机号"
-          v-decorator="['mobile', {rules: [{ required: true, message: '请输入正确的手机号', pattern: /^1[3456789]\d{9}$/ }, { validator: this.handlePhoneCheck } ], validateTrigger: ['change', 'blur'] }]"
+          v-decorator="['mobile', {rules: [{ required: true, message: '請輸入正確的手機號碼', pattern: /[0-9]{8}$/ }, { validator: this.handlePhoneCheck } ], validateTrigger: ['change', 'blur'] }]"
         >
-          <a-select slot="addonBefore" size="large" defaultValue="+86">
-            <a-select-option value="+86">+86</a-select-option>
-            <a-select-option value="+87">+87</a-select-option>
+          <a-select slot="addonBefore" size="large" defaultValue="+886">
+            <a-select-option value="+886">+886</a-select-option>
+            <a-select-option value="+000">其他國碼...</a-select-option>
           </a-select>
         </a-input>
       </a-form-item>
@@ -61,8 +61,8 @@
             <a-input
               size="large"
               type="text"
-              placeholder="验证码"
-              v-decorator="['captcha', {rules: [{ required: true, message: '请输入验证码' }], validateTrigger: 'blur'}]"
+              placeholder="驗證碼"
+              v-decorator="['captcha', {rules: [{ required: true, message: '請輸入驗證碼' }], validateTrigger: 'blur'}]"
             >
               <a-icon slot="prefix" type="mail" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
@@ -74,7 +74,7 @@
             size="large"
             :disabled="state.smsSendBtn"
             @click.stop.prevent="getCaptcha"
-            v-text="!state.smsSendBtn && '获取验证码'||(state.time+' s')"></a-button>
+            v-text="!state.smsSendBtn && '取得驗證碼'||(state.time+' s')"></a-button>
         </a-col>
       </a-row>
 
@@ -86,9 +86,9 @@
           class="register-button"
           :loading="registerBtn"
           @click.stop.prevent="handleSubmit"
-          :disabled="registerBtn">注册
+          :disabled="registerBtn">註冊帳號
         </a-button>
-        <router-link class="login" :to="{ name: 'login' }">使用已有账户登录</router-link>
+        <router-link class="login" :to="{ name: 'login' }">使用現有帳號登入</router-link>
       </a-form-item>
 
     </a-form>
@@ -104,7 +104,7 @@ const levelNames = {
   0: '低',
   1: '低',
   2: '中',
-  3: '强'
+  3: '高'
 }
 const levelClass = {
   0: 'error',
@@ -153,15 +153,15 @@ export default {
     handlePasswordLevel (rule, value, callback) {
       let level = 0
 
-      // 判断这个字符串中有没有数字
+      // 有無數字
       if (/[0-9]/.test(value)) {
         level++
       }
-      // 判断字符串中有没有字母
+      // 有無字母
       if (/[a-zA-Z]/.test(value)) {
         level++
       }
-      // 判断字符串中有没有特殊符号
+      // 有無特殊符號
       if (/[^0-9a-zA-Z_]/.test(value)) {
         level++
       }
@@ -176,7 +176,7 @@ export default {
         if (level === 0) {
           this.state.percent = 10
         }
-        callback(new Error('密码强度不够'))
+        callback(new Error('密碼強度不夠...'))
       }
     },
 
@@ -184,10 +184,10 @@ export default {
       const password = this.form.getFieldValue('password')
       console.log('value', value)
       if (value === undefined) {
-        callback(new Error('请输入密码'))
+        callback(new Error('請輸入密碼'))
       }
       if (value && password && value.trim() !== password.trim()) {
-        callback(new Error('两次密码不一致'))
+        callback(new Error('輸入密碼不一致'))
       }
       callback()
     },
@@ -212,13 +212,11 @@ export default {
       const { form: { validateFields }, $router, $message } = this
       validateFields({ force: true }, (err, values) => {
         if (!err) {
-          // 在这里进行Rest请求，params参数如右：{email: "1648266192@qq.com", password: "123456", password2: "123456", mobile: "17601324488", captcha: "69076"}
+          // e.g. params：{email: "mko123654@gmail.com", password: "123456", password2: "123456", mobile: "0933313793", captcha: "010203"}
           register(values).then(res => {
-            // 成功就跳转到结果页面
             console.log(res)
             $router.push({ name: 'registerResult', params: { ...values } })
           }).catch(err => {
-            // 失败就弹出警告消息
             $message.error(`load user err: ${err.message}`)
           })
         }
@@ -242,13 +240,13 @@ export default {
               }
             }, 1000)
 
-            const hide = $message.loading('验证码发送中..', 0)
+            const hide = $message.loading('驗證碼發送中...', 0)
 
             getSmsCaptcha({ mobile: values.mobile }).then(res => {
               setTimeout(hide, 2500)
               $notification['success']({
                 message: '提示',
-                description: '验证码获取成功，您的验证码为：' + res.result.captcha,
+                description: '驗證碼取得成功，您的驗證碼為：' + res.result.captcha,
                 duration: 8
               })
             }).catch(err => {
@@ -264,8 +262,8 @@ export default {
     },
     requestFailed (err) {
       this.$notification['error']({
-        message: '错误',
-        description: ((err.response || {}).data || {}).message || '请求出现错误，请稍后再试',
+        message: '錯誤',
+        description: ((err.response || {}).data || {}).message || '發生錯誤，請稍後再試',
         duration: 4
       })
       this.registerBtn = false

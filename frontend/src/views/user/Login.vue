@@ -12,15 +12,15 @@
         :tabBarStyle="{ textAlign: 'center', borderBottom: 'unset' }"
         @change="handleTabClick"
       >
-        <a-tab-pane key="tab1" tab="在线考试系统登录">
+        <a-tab-pane key="tab1" tab="Abby.com 線上考試系統登入">
           <a-form-item>
             <a-input
               size="large"
               type="text"
-              placeholder="请输入帐户名/邮箱/手机号"
+              placeholder="請輸入註冊帳號或E-mail"
               v-decorator="[
                 'username',
-                {rules: [{ required: true, message: '请输入帐户名/邮箱/手机号' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change'}
+                {rules: [{ required: true, message: '請輸入註冊帳號或E-mail' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change'}
               ]"
             >
               <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
@@ -32,10 +32,10 @@
               size="large"
               type="password"
               autocomplete="false"
-              placeholder="请输入密码"
+              placeholder="請輸入密碼"
               v-decorator="[
                 'password',
-                {rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}
+                {rules: [{ required: true, message: '請輸入密碼' }], validateTrigger: 'blur'}
               ]"
             >
               <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
@@ -45,8 +45,7 @@
       </a-tabs>
 
       <a-form-item>
-        <a-checkbox v-decorator="['rememberMe']">自动登录</a-checkbox>
-        <router-link class="register" :to="{ name: 'register' }" style="float: right;">注册账户</router-link>
+        <router-link class="register" :to="{ name: 'register' }" style="float: right;">註冊帳號</router-link>
       </a-form-item>
 
       <a-form-item style="margin-top:24px">
@@ -57,7 +56,7 @@
           class="login-button"
           :loading="state.loginBtn"
           :disabled="state.loginBtn"
-        >确定
+        >確定
         </a-button>
       </a-form-item>
     </a-form>
@@ -74,7 +73,7 @@
 <script>
 import TwoStepCaptcha from '../../components/tools/TwoStepCaptcha'
 import { mapActions } from 'vuex'
-import { timeFix } from '../../utils/util'
+import {timeFix, welcome} from '../../utils/util'
 import { getSmsCaptcha, get2step } from '../../api/login'
 
 export default {
@@ -110,7 +109,7 @@ export default {
     // this.requiredTwoStepCaptcha = true
   },
   methods: {
-    ...mapActions(['Login', 'Logout']), // 这个是从Vuex中直接继承过来，从而可以当本地方法用，见store/modules/user.js
+    ...mapActions(['Login', 'Logout']), // 由Vuex直接繼承果來，變成可以當內部分法使用，詳見store/modules/user.js
     // handler
     handleUsernameOrEmail (rule, value, callback) {
       const { state } = this
@@ -140,20 +139,20 @@ export default {
       const validateFieldsKey = customActiveKey === 'tab1' ? ['username', 'password'] : ['mobile', 'captcha']
 
       validateFields(validateFieldsKey, { force: true }, (err, values) => {
-        console.log(values) // 打印用户的登录参数
+        console.log(values)
         if (!err) {
-          const loginParams = {} // 声明登录的参数
+          const loginParams = {}
           // delete loginParams.username
           // loginParams[!state.loginType ? 'email' : 'username'] = values.username
-          loginParams.loginType = state.loginType // 登录类型，0 email, 1 username
-          loginParams.userInfo = values.username // 设置用户信息，因为email还是username不确定，所以用userinfo字段来代替
-          loginParams.password = values.password // 用户的密码，无加密
+          loginParams.loginType = state.loginType // 0:email 1:username
+          loginParams.userInfo = values.username // 不確地是 email 或 username 所以用userinfo代替，之後再加以判斷
+          loginParams.password = values.password
           console.log(loginParams)
-          Login(loginParams) // 请求登录接口
-            .then((res) => this.loginSuccess(res)) // 成功
-            .catch(err => this.requestFailed(err)) // 失败
+          Login(loginParams)
+            .then((res) => this.loginSuccess(res))
+            .catch(err => this.requestFailed(err))
             .finally(() => {
-              state.loginBtn = false // 不管登录成功与否，都要把按钮置灰，防止用户重复点击
+              state.loginBtn = false // flag，防止使用者重複點擊
             })
         } else {
           setTimeout(() => {
@@ -178,12 +177,12 @@ export default {
             }
           }, 1000)
 
-          const hide = this.$message.loading('验证码发送中..', 0)
+          const hide = this.$message.loading('驗證碼發送中...', 0)
           getSmsCaptcha({ mobile: values.mobile }).then(res => {
             setTimeout(hide, 2500)
             this.$notification['success']({
               message: '提示',
-              description: '验证码获取成功，您的验证码为：' + res.result.captcha,
+              description: '驗證碼取得成功，您的驗證碼為：' + res.result.captcha,
               duration: 8
             })
           }).catch(err => {
@@ -208,18 +207,17 @@ export default {
     loginSuccess (res) {
       console.log(res)
       this.$router.push({ name: 'dashboard' })
-      // 延迟 1 秒显示欢迎信息
       setTimeout(() => {
         this.$notification.success({
-          message: '欢迎',
-          description: `${timeFix()}，欢迎回来`
+          message: '登入成功',
+          description: `${welcome()}`
         })
       }, 1000)
     },
     requestFailed (err) {
       this.$notification['error']({
-        message: '错误',
-        description: ((err.response || {}).data || {}).message || '用户名或密码错误',
+        message: '登入失敗',
+        description: ((err.response || {}).data || {}).message || '帳號或密碼錯誤',
         duration: 4
       })
     }

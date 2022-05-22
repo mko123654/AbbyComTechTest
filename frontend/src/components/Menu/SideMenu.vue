@@ -35,7 +35,7 @@ export default {
     theme: {
       type: String,
       required: false,
-      default: 'dark'
+      default: 'light'
     },
     collapsible: {
       type: Boolean,

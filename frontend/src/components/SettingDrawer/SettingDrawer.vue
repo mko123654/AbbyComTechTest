@@ -12,12 +12,12 @@
       <div class="setting-drawer-index-content">
 
         <div :style="{ marginBottom: '24px' }">
-          <h3 class="setting-drawer-index-title">整体风格设置</h3>
+          <h3 class="setting-drawer-index-title">整體風格設定</h3>
 
           <div class="setting-drawer-index-blockChecbox">
             <a-tooltip>
               <template slot="title">
-                暗色菜单风格
+                Dark
               </template>
               <div class="setting-drawer-index-item" @click="handleMenuTheme('dark')">
                 <img src="https://gw.alipayobjects.com/zos/rmsportal/LCkqqYNmvBEbokSDscrm.svg" alt="dark">
@@ -29,7 +29,7 @@
 
             <a-tooltip>
               <template slot="title">
-                亮色菜单风格
+                Light
               </template>
               <div class="setting-drawer-index-item" @click="handleMenuTheme('light')">
                 <img src="https://gw.alipayobjects.com/zos/rmsportal/jpRkZQMyYRryryPNtyIC.svg" alt="light">
@@ -42,7 +42,7 @@
         </div>
 
         <div :style="{ marginBottom: '24px' }">
-          <h3 class="setting-drawer-index-title">主题色</h3>
+          <h3 class="setting-drawer-index-title">主題色</h3>
 
           <div style="height: 20px">
             <a-tooltip class="setting-drawer-theme-color-colorBlock" v-for="(item, index) in colorList" :key="index">
@@ -59,12 +59,12 @@
         <a-divider />
 
         <div :style="{ marginBottom: '24px' }">
-          <h3 class="setting-drawer-index-title">导航模式</h3>
+          <h3 class="setting-drawer-index-title">導航列模式</h3>
 
           <div class="setting-drawer-index-blockChecbox">
             <a-tooltip>
               <template slot="title">
-                侧边栏导航
+                side menu
               </template>
               <div class="setting-drawer-index-item" @click="handleLayout('sidemenu')">
                 <img src="https://gw.alipayobjects.com/zos/rmsportal/JopDzEhOqwOjeNTXkoje.svg" alt="sidemenu">
@@ -76,7 +76,7 @@
 
             <a-tooltip>
               <template slot="title">
-                顶部栏导航
+                top menu
               </template>
               <div class="setting-drawer-index-item" @click="handleLayout('topmenu')">
                 <img src="https://gw.alipayobjects.com/zos/rmsportal/KDNDBbriJhLwuqMoxcAr.svg" alt="topmenu">
@@ -91,15 +91,15 @@
               <a-list-item>
                 <a-tooltip slot="actions">
                   <template slot="title">
-                    该设定仅 [顶部栏导航] 时有效
+                    該設定僅於【top menu】時有效
                   </template>
                   <a-select size="small" style="width: 80px;" :defaultValue="contentWidth" @change="handleContentWidthChange">
                     <a-select-option value="Fixed">固定</a-select-option>
-                    <a-select-option value="Fluid" v-if="layoutMode !== 'sidemenu'">流式</a-select-option>
+                    <a-select-option value="Fluid" v-if="layoutMode !== 'sidemenu'">folw</a-select-option>
                   </a-select>
                 </a-tooltip>
                 <a-list-item-meta>
-                  <div slot="title">内容区域宽度</div>
+                  <div slot="title">內容區域寬度</div>
                 </a-list-item-meta>
               </a-list-item>
               <a-list-item>
@@ -112,15 +112,15 @@
                 <a-switch slot="actions" size="small" :disabled="!fixedHeader" :defaultChecked="autoHideHeader" @change="handleFixedHeaderHidden" />
                 <a-list-item-meta>
                   <a-tooltip slot="title" placement="left">
-                    <template slot="title">固定 Header 时可配置</template>
-                    <div :style="{ opacity: !fixedHeader ? '0.5' : '1' }">下滑时隐藏 Header</div>
+                    <template slot="title">固定 Header 時可設定</template>
+                    <div :style="{ opacity: !fixedHeader ? '0.5' : '1' }">下滑時隱藏 Header</div>
                   </a-tooltip>
                 </a-list-item-meta>
               </a-list-item>
               <a-list-item >
                 <a-switch slot="actions" size="small" :disabled="(layoutMode === 'topmenu')" :defaultChecked="fixSiderbar" @change="handleFixSiderbar" />
                 <a-list-item-meta>
-                  <div slot="title" :style="{ textDecoration: layoutMode === 'topmenu' ? 'line-through' : 'unset' }">固定侧边菜单</div>
+                  <div slot="title" :style="{ textDecoration: layoutMode === 'topmenu' ? 'line-through' : 'unset' }">固定side menu</div>
                 </a-list-item-meta>
               </a-list-item>
             </a-list>
@@ -129,38 +129,38 @@
         <a-divider />
 
         <div :style="{ marginBottom: '24px' }">
-          <h3 class="setting-drawer-index-title">其他设置</h3>
+          <h3 class="setting-drawer-index-title">其他設定</h3>
           <div>
             <a-list :split="false">
               <a-list-item>
                 <a-switch slot="actions" size="small" :defaultChecked="colorWeak" @change="onColorWeak" />
                 <a-list-item-meta>
-                  <div slot="title">色弱模式</div>
+                  <div slot="title">色弱輔助模式</div>
                 </a-list-item-meta>
               </a-list-item>
               <a-list-item>
                 <a-switch slot="actions" size="small" :defaultChecked="multiTab" @change="onMultiTab" />
                 <a-list-item-meta>
-                  <div slot="title">多页签模式</div>
+                  <div slot="title">多頁籤模式</div>
                 </a-list-item-meta>
               </a-list-item>
             </a-list>
           </div>
         </div>
         <a-divider />
-        <div :style="{ marginBottom: '24px' }">
-          <a-button
-            @click="doCopy"
-            icon="copy"
-            block
-          >拷贝设置</a-button>
-          <a-alert type="warning" :style="{ marginTop: '24px' }">
-            <span slot="message">
-              配置栏只在开发环境用于预览，生产环境不会展现，请手动修改配置文件
-              <a href="https://github.com/sendya/ant-design-pro-vue/blob/master/src/config/defaultSettings.js" target="_blank">src/config/defaultSettings.js</a>
-            </span>
-          </a-alert>
-        </div>
+<!--        <div :style="{ marginBottom: '24px' }">-->
+<!--          <a-button-->
+<!--            @click="doCopy"-->
+<!--            icon="copy"-->
+<!--            block-->
+<!--          >複製設定</a-button>-->
+<!--          <a-alert type="warning" :style="{ marginTop: '24px' }">-->
+<!--            <span slot="message">-->
+<!--              配置欄只在Dev模式下有效，Prod環境下不顯示，請手動修改config設定-->
+<!--              <a href="https://github.com/sendya/ant-design-pro-vue/blob/master/src/config/defaultSettings.js" target="_blank">src/config/defaultSettings.js</a>-->
+<!--            </span>-->
+<!--          </a-alert>-->
+<!--        </div>-->
       </div>
       <div class="setting-drawer-index-handle" @click="toggle">
         <a-icon type="setting" v-if="!visible"/>
@@ -198,7 +198,6 @@ export default {
     setTimeout(() => {
       vm.visible = false
     }, 16)
-    // 当主题色不是默认色时，才进行主题编译
     if (this.primaryColor !== config.primaryColor) {
       updateTheme(this.primaryColor)
     }
@@ -250,16 +249,16 @@ export default {
 }`
       this.$copyText(text).then(message => {
         console.log('copy', message)
-        this.$message.success('复制完毕')
+        this.$message.success('複製成功')
       }).catch(err => {
         console.log('copy.err', err)
-        this.$message.error('复制失败')
+        this.$message.error('複製失敗')
       })
     },
     handleLayout (mode) {
       this.baseConfig.layout = mode
       this.$store.dispatch('ToggleLayoutMode', mode)
-      // 因为顶部菜单不能固定左侧菜单栏，所以强制关闭
+      // 因為top menu不能固定side menu，所以強制關閉
       //
       this.handleFixSiderbar(false)
     },

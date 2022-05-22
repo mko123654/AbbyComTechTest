@@ -1,9 +1,3 @@
-export function timeFix () {
-  const time = new Date()
-  const hour = time.getHours()
-  return hour < 9 ? '早安' : hour <= 11 ? '早安' : hour <= 13 ? '午安' : hour < 20 ? '午安' : '晚安'
-}
-
 export function welcome () {
   const arr = ['歡迎來到Abby.com', '戶外活動請保持社交距離，Abby.com關心您!', '餓了嗎? Abby.com提供免費零食點心']
   const index = Math.floor(Math.random() * arr.length)

@@ -14,6 +14,5 @@ export {
   MultiTab,
   TagSelect,
   StandardFormRow,
-  // 兼容写法，请勿继续使用
   DescriptionList as DetailList
 }

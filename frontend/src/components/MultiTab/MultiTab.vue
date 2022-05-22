@@ -48,7 +48,7 @@ export default {
     remove (targetKey) {
       this.pages = this.pages.filter(page => page.fullPath !== targetKey)
       this.fullPathList = this.fullPathList.filter(path => path !== targetKey)
-      // 判断当前标签是否关闭，若关闭则跳转到最后一个还存在的标签页
+      // 判斷目前標籤是否關閉，若關閉則跳到最後一個還存在的標籤頁
       if (!this.fullPathList.includes(this.activeKey)) {
         this.selectedLastPath()
       }
@@ -70,7 +70,7 @@ export default {
           }
         })
       } else {
-        this.$message.info('左侧没有标签')
+        this.$message.info('左側無標籤')
       }
     },
     closeRight (e) {
@@ -82,7 +82,7 @@ export default {
           }
         })
       } else {
-        this.$message.info('右侧没有标签')
+        this.$message.info('右側無標籤')
       }
     },
     closeAll (e) {
@@ -114,10 +114,10 @@ export default {
     renderTabPaneMenu (e) {
       return (
         <a-menu {...{ on: { click: this.closeMenuClick } }}>
-          <a-menu-item key="close-that" data-vkey={e}>关闭当前标签</a-menu-item>
-          <a-menu-item key="close-right" data-vkey={e}>关闭右侧</a-menu-item>
-          <a-menu-item key="close-left" data-vkey={e}>关闭左侧</a-menu-item>
-          <a-menu-item key="close-all" data-vkey={e}>关闭全部</a-menu-item>
+          <a-menu-item key="close-that" data-vkey={e}>關閉當前標籤</a-menu-item>
+          <a-menu-item key="close-right" data-vkey={e}>關閉右側標籤</a-menu-item>
+          <a-menu-item key="close-left" data-vkey={e}>關閉左側標籤</a-menu-item>
+          <a-menu-item key="close-all" data-vkey={e}>關閉全部標籤</a-menu-item>
         </a-menu>
       )
     },
