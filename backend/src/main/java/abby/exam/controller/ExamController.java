@@ -11,8 +11,8 @@ import abby.exam.entity.ExamRecord;
 import abby.exam.enums.ResultEnum;
 import abby.exam.service.ExamService;
 import abby.exam.vo.*;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,14 +22,14 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@Api(tags = "Exam APIs")
+@Tag(name = "Exam APIs")
 @RequestMapping("/api/exam")
 public class ExamController {
     @Autowired
     private ExamService examService;
 
     @GetMapping("/all")
-    @ApiOperation("取得所有考試的列表")
+    @Operation(summary = "", description = "取得所有考試的列表")
     ResultVO<List<ExamVo>> getExamAll() {
         ResultVO<List<ExamVo>> resultVO;
         try {
@@ -43,7 +43,7 @@ public class ExamController {
     }
 
     @PostMapping("/create")
-    @ApiOperation("新增考試")
+    @Operation(summary = "", description = "新增考試")
     ResultVO<Exam> createExam(@RequestBody ExamCreateVo examCreateVo, HttpServletRequest request) {
         ResultVO<Exam> resultVO;
         String userId = (String) request.getAttribute("user_id");
@@ -58,7 +58,7 @@ public class ExamController {
     }
 
     @PostMapping("/update")
-    @ApiOperation("更新考試")
+    @Operation(summary = "", description = "更新考試")
     ResultVO<Exam> updateExam(@RequestBody ExamVo examVo, HttpServletRequest request) {
         ResultVO<Exam> resultVO;
         String userId = (String) request.getAttribute("user_id");
@@ -73,7 +73,7 @@ public class ExamController {
     }
 
     @GetMapping("/card/list")
-    @ApiOperation("取得考試列表，並配合前端卡片顯示")
+    @Operation(summary = "", description = "取得考試列表，並配合前端卡片顯示")
     ResultVO<List<ExamCardVo>> getExamCardList() {
         ResultVO<List<ExamCardVo>> resultVO;
         try {
@@ -87,7 +87,7 @@ public class ExamController {
     }
 
     @GetMapping("/detail/{id}")
-    @ApiOperation("依考試的id，獲得考試詳情")
+    @Operation(summary = "", description = "依考試的id，獲得考試詳情")
     ResultVO<ExamDetailVo> getExamDetail(@PathVariable String id) {
         ResultVO<ExamDetailVo> resultVO;
         try {
@@ -100,7 +100,7 @@ public class ExamController {
     }
 
     @GetMapping("/question/all")
-    @ApiOperation("取得所有考試問題")
+    @Operation(summary = "", description = "取得所有考試問題")
     ResultVO<List<QuestionVo>> getQuestionAll() {
         ResultVO<List<QuestionVo>> resultVO;
         try {
@@ -114,7 +114,7 @@ public class ExamController {
     }
 
     @PostMapping("/question/update")
-    @ApiOperation("更新考試問題")
+    @Operation(summary = "", description = "更新考試問題")
     ResultVO<QuestionVo> questionUpdate(@RequestBody QuestionVo questionVo) {
         try {
             QuestionVo questionVoResult = examService.updateQuestion(questionVo);
@@ -126,7 +126,7 @@ public class ExamController {
     }
 
     @PostMapping("/question/create")
-    @ApiOperation("新增考試問題")
+    @Operation(summary = "", description = "新增考試問題")
     ResultVO<String> questionCreate(@RequestBody QuestionCreateSimplifyVo questionCreateSimplifyVo, HttpServletRequest request) {
         QuestionCreateVo questionCreateVo = new QuestionCreateVo();
         // 把能複製的屬性複製到新的物件
@@ -143,7 +143,7 @@ public class ExamController {
     }
 
     @GetMapping("/question/selection")
-    @ApiOperation("取得問題分類的相關選項")
+    @Operation(summary = "", description = "取得問題分類的相關選項")
     ResultVO<QuestionSelectionVo> getSelections() {
         QuestionSelectionVo questionSelectionVo = examService.getSelections();
         if (questionSelectionVo != null) {
@@ -154,7 +154,7 @@ public class ExamController {
     }
 
     @GetMapping("/question/detail/{id}")
-    @ApiOperation("根據考試問題的id查看詳細資訊")
+    @Operation(summary = "", description = "根據考試問題的id查看詳細資訊")
     ResultVO<QuestionDetailVo> getQuestionDetail(@PathVariable String id) {
         ResultVO<QuestionDetailVo> resultVO;
         try {
@@ -168,7 +168,7 @@ public class ExamController {
     }
 
     @GetMapping("/question/type/list")
-    @ApiOperation("取得考試問題列表，依單選、多選和是非題型")
+    @Operation(summary = "", description = "取得考試問題列表，依單選、多選和是非題型")
     ResultVO<ExamQuestionTypeVo> getExamQuestionTypeList() {
         ResultVO<ExamQuestionTypeVo> resultVO;
         try {
@@ -183,7 +183,7 @@ public class ExamController {
 
 
     @PostMapping("/finish/{examId}")
-    @ApiOperation("考生送出考試答案，並計算分數回傳")
+    @Operation(summary = "", description = "考生送出考試答案，並計算分數回傳")
     ResultVO<ExamRecord> finishExam(@PathVariable String examId, @RequestBody HashMap<String, List<String>> answersMap, HttpServletRequest request) {
         ResultVO<ExamRecord> resultVO;
         try {
@@ -198,7 +198,7 @@ public class ExamController {
     }
 
     @GetMapping("/record/list")
-    @ApiOperation("取得該登入用戶的考試紀錄")
+    @Operation(summary = "", description = "取得該登入用戶的考試紀錄")
     ResultVO<List<ExamRecordVo>> getExamRecordList(HttpServletRequest request) {
         ResultVO<List<ExamRecordVo>> resultVO;
         try {
@@ -213,7 +213,7 @@ public class ExamController {
     }
 
     @GetMapping("/record/list/all")
-    @ApiOperation("取得所有用戶的考試紀錄")
+    @Operation(summary = "", description = "取得所有用戶的考試紀錄")
     ResultVO<List<ExamRecordVo>> getAllExamRecordList(HttpServletRequest request) {
         ResultVO<List<ExamRecordVo>> resultVO;
         try {
@@ -228,7 +228,7 @@ public class ExamController {
     }
 
     @GetMapping("/record/detail/{recordId}")
-    @ApiOperation("依照考試紀錄id，取得考試紀錄詳情")
+    @Operation(summary = "", description = "依照考試紀錄id，取得考試紀錄詳情")
     ResultVO<RecordDetailVo> getExamRecordDetail(@PathVariable String recordId) {
         ResultVO<RecordDetailVo> resultVO;
         try {

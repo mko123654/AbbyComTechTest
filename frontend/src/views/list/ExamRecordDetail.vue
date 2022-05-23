@@ -97,7 +97,6 @@
               <p v-html="currentQuestion.description"></p>
             </div>
 
-
           </div>
         </a-layout-content>
         <a-layout-footer :style="{ textAlign: 'center' }">

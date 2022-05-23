@@ -36,7 +36,7 @@
 
 <script>
 import HeadInfo from '../../components/tools/HeadInfo'
-import {getAllExamRecordList, getExamRecordList} from '../../api/exam'
+import { getAllExamRecordList, getExamRecordList } from '../../api/exam'
 
 export default {
   name: 'ExamRecordList',
