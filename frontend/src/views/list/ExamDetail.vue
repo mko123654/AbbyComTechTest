@@ -47,7 +47,7 @@
       <a-layout :style="{ marginLeft: '200px' }">
         <a-layout-content :style="{ margin: '24px 16px 0',height: '84vh', overflow: 'initial' }">
           <div :style="{ padding: '24px', background: '#fff',height: '84vh'}">
-            <span v-show="currentQuestion === ''" style="font-size: 30px;font-family: Consolas">歡銀參加考試，請點擊左側題目編號開始作答</span>
+            <span v-show="currentQuestion === ''" style="font-size: 30px;font-family: Consolas">歡迎參加考試，請點擊左側題目編號開始作答</span>
             <strong>{{ currentQuestion.type }} </strong> <p v-html="currentQuestion.name"></p>
             <!-- 單選 是非 -->
             <a-radio-group @change="onRadioChange" v-model="radioValue" v-if="currentQuestion.type === '單選題' || currentQuestion.type === '是非題'">

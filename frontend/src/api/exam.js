@@ -149,3 +149,13 @@ export function getExamRecordList () {
     }
   })
 }
+
+export function getAllExamRecordList () {
+  return axios({
+    url: api.ExamRecordListAll,
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  })
+}

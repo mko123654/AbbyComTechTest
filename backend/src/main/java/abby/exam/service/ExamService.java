@@ -67,6 +67,11 @@ public interface ExamService {
     List<ExamRecordVo> getExamRecordList(String userId);
 
     /**
+     * 取得所有用戶所有考試紀錄
+     */
+    List<ExamRecordVo> getAllExamRecordList();
+
+    /**
      * 取得該用戶考試紀錄詳情
      */
     RecordDetailVo getRecordDetail(String recordId);

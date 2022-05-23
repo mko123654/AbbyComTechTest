@@ -12,8 +12,8 @@
             <div class="meta-content" slot="description">{{ item.content }}</div>
           </a-card-meta>
           <template class="ant-card-actions" slot="actions">
-            <a>满分：{{ item.score }}分</a>
-            <a>限时：{{ item.elapse }}分钟</a>
+            <a>滿分：{{ item.score }}分</a>
+            <a>限時：{{ item.elapse }}分鐘</a>
           </template>
         </a-card>
       </a-list-item>

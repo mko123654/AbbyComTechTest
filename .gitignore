@@ -133,3 +133,5 @@ hs_err_pid*
 /.idea/inspectionProfiles/Project_Default.xml
 /.idea/vcs.xml
 /.idea/git_toolbox_prj.xml
+/.idea/libraries/Maven__com_google_code_gson_gson_2_9_0.xml
+/.idea/libraries/Maven__io_jsonwebtoken_jjwt_0_9_1.xml

@@ -15,7 +15,7 @@
           </div>
           <div class="list-content">
             <div class="list-content-item">
-              <span>Owner</span>
+              <span>考生</span>
               <p>{{ item.user.userUsername }}</p>
             </div>
             <div class="list-content-item">
@@ -36,7 +36,7 @@
 
 <script>
 import HeadInfo from '../../components/tools/HeadInfo'
-import { getExamRecordList } from '../../api/exam'
+import {getAllExamRecordList, getExamRecordList} from '../../api/exam'
 
 export default {
   name: 'ExamRecordList',
@@ -56,22 +56,45 @@ export default {
       window.open(routeUrl.href, '_blank')
     }
   },
+  // computed: {
+  //   userRole () {
+  //     return this.$store.state.roles
+  //   }
+  // },
   mounted () {
-    getExamRecordList().then(res => {
-      if (res.code === 0) {
-        this.data = res.data
-      } else {
+    if (this.$store.state.user.roles.id === 'student') {
+      getExamRecordList().then(res => {
+        if (res.code === 0) {
+          this.data = res.data
+        } else {
+          this.$notification.error({
+            message: '取得考試紀錄失敗',
+            description: res.msg
+          })
+        }
+      }).catch(err => {
         this.$notification.error({
           message: '取得考試紀錄失敗',
-          description: res.msg
+          description: err.message
         })
-      }
-    }).catch(err => {
-      this.$notification.error({
-        message: '取得考試紀錄失敗',
-        description: err.message
       })
-    })
+    } else {
+      getAllExamRecordList().then(res => {
+        if (res.code === 0) {
+          this.data = res.data
+        } else {
+          this.$notification.error({
+            message: '取得考試紀錄失敗',
+            description: res.msg
+          })
+        }
+      }).catch(err => {
+        this.$notification.error({
+          message: '取得考試紀錄失敗',
+          description: err.message
+        })
+      })
+    }
   }
 }
 </script>

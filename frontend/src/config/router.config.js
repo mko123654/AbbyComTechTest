@@ -85,13 +85,13 @@ export const asyncRouterMap = [
         redirect: '/list/exam-record-list',
         component: PageView,
         hideChildrenInMenu: true,
-        meta: { title: '我的考試紀錄', keepAlive: true, icon: 'user', permission: ['exam-record-list'] },
+        meta: { title: '考試紀錄', keepAlive: true, icon: 'user', permission: ['exam-record-list'] },
         children: [
           {
             path: '/list/exam-record-list',
             name: 'ExamRecordList',
             component: () => import('../views/list/ExamRecordList'),
-            meta: { title: '參加過的考試列表', keepAlive: true, permission: ['exam-record-list'] }
+            meta: { title: '已完成的考試列表', keepAlive: true, permission: ['exam-record-list'] }
           }
         ]
       },

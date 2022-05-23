@@ -212,6 +212,21 @@ public class ExamController {
         return resultVO;
     }
 
+    @GetMapping("/record/list/all")
+    @ApiOperation("取得所有用戶的考試紀錄")
+    ResultVO<List<ExamRecordVo>> getAllExamRecordList(HttpServletRequest request) {
+        ResultVO<List<ExamRecordVo>> resultVO;
+        try {
+            String userId = (String) request.getAttribute("user_id");
+            List<ExamRecordVo> examRecordVoList = examService.getAllExamRecordList();
+            resultVO = new ResultVO<>(ResultEnum.GET_EXAM_RECORD_BY_USERID_SUCCESS.getCode(), ResultEnum.GET_EXAM_RECORD_BY_USERID_SUCCESS.getMessage(), examRecordVoList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultVO = new ResultVO<>(ResultEnum.GET_EXAM_RECORD_BY_USERID_FAILED.getCode(), ResultEnum.GET_EXAM_RECORD_BY_USERID_FAILED.getMessage(), null);
+        }
+        return resultVO;
+    }
+
     @GetMapping("/record/detail/{recordId}")
     @ApiOperation("依照考試紀錄id，取得考試紀錄詳情")
     ResultVO<RecordDetailVo> getExamRecordDetail(@PathVariable String recordId) {

@@ -556,6 +556,22 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
+    public List<ExamRecordVo> getAllExamRecordList() {
+        List<ExamRecord> examRecordList = examRecordRepository.findAll();
+        List<ExamRecordVo> examRecordVoList = new ArrayList<>();
+        for (ExamRecord examRecord : examRecordList) {
+            ExamRecordVo examRecordVo = new ExamRecordVo();
+            Exam exam = examRepository.findById(examRecord.getExamId()).orElse(null);
+            examRecordVo.setExam(exam);
+            User user = userRepository.findById(examRecord.getExamJoinerId()).orElse(null);
+            examRecordVo.setUser(user);
+            examRecordVo.setExamRecord(examRecord);
+            examRecordVoList.add(examRecordVo);
+        }
+        return examRecordVoList;
+    }
+
+    @Override
     public RecordDetailVo getRecordDetail(String recordId) {
         ExamRecord record = examRecordRepository.findById(recordId).orElse(null);
         RecordDetailVo recordDetailVo = new RecordDetailVo();
@@ -600,7 +616,6 @@ public class ExamServiceImpl implements ExamService {
 
     private String replaceLastSeparator(String str) {
         String lastChar = str.substring(str.length() - 1);
-        // 题目和题目之间用$分隔，题目有多个选项地话用-分隔,题目和选项之间用_分隔
         if ("-".equals(lastChar) || "_".equals(lastChar) || "$".equals(lastChar)) {
             str = StrUtil.sub(str, 0, str.length() - 1);
         }

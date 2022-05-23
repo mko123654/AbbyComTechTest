@@ -26,6 +26,7 @@ const api = {
   QuestionDetail: '/exam/question/detail/',
   FinishExam: '/exam/finish/',
   ExamRecordList: '/exam/record/list',
+  ExamRecordListAll: '/exam/record/list/all',
   recordDetail: '/exam/record/detail/'
 }
 export default api
