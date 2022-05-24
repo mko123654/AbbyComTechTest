@@ -11,7 +11,7 @@
             <a slot="title">{{ item.exam.examName }}</a>
           </a-list-item-meta>
           <div slot="actions">
-            <a @click="viewExamRecordDetail(item.examRecord)">查看考試詳情</a>
+            <button type="button" class="btn btn-success view-exam" @click="viewExamRecordDetail(item.examRecord)">查看考試詳情</button>
           </div>
           <div class="list-content">
             <div class="list-content-item">

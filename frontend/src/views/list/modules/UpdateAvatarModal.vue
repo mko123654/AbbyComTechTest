@@ -1,5 +1,5 @@
 <template>
-  <a-modal title="編輯方面" :width="400" :visible="visible" :confirmLoading="confirmLoading" @cancel="handleCancel">
+  <a-modal title="編輯封面" :width="400" :visible="visible" :confirmLoading="confirmLoading" @cancel="handleCancel">
     <div id="summernote-exam-avatar"></div>
     <template slot="footer">
       <a-button key="update" @click="handleUpdate">完成</a-button>
