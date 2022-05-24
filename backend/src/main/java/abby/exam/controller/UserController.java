@@ -30,7 +30,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    @Operation(summary = "", description = "使用者註冊")
+    @Operation(summary = "使用者註冊", description = "使用者註冊")
     ResultVO<User> register(@RequestBody RegisterDTO registerDTO) {
         ResultVO<User> resultVO;
         User user = userService.register(registerDTO);
@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    @Operation(summary = "", description = "根據username或email登入，登入成功回傳token")
+    @Operation(summary = "根據username或email登入，登入成功回傳token", description = "根據username或email登入，登入成功回傳token")
     ResultVO<String> login(@RequestBody LoginQo loginQo) {
         ResultVO<String> resultVO;
         String token = userService.login(loginQo);
@@ -57,7 +57,7 @@ public class UserController {
     }
 
     @GetMapping("/user-info")
-    @Operation(summary = "", description = "取得UserInfo")
+    @Operation(summary = "取得UserInfo", description = "取得UserInfo")
     ResultVO<UserVo> getUserInfo(HttpServletRequest request) {
         String userId = (String) request.getAttribute("user_id");
         UserVo userVo = userService.getUserInfo(userId);
@@ -65,7 +65,7 @@ public class UserController {
     }
 
     @GetMapping("/info")
-    @Operation(summary = "", description = "取得UserInfo，包含個人資料和操作權限")
+    @Operation(summary = "取得UserInfo，包含個人資料和操作權限", description = "取得UserInfo，包含個人資料和操作權限")
     ResultVO<UserInfoVo> getInfo(HttpServletRequest request) {
         String userId = (String) request.getAttribute("user_id");
         UserInfoVo userInfoVo = userService.getInfo(userId);

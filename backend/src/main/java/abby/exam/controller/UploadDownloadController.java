@@ -28,37 +28,37 @@ import java.io.IOException;
 public class UploadDownloadController {
 
     @PostMapping("/api/upload/singleAndparas")
-    @Operation(summary = "", description = "單一文件上傳，支援傳入參數")
+    @Operation(summary = "單一文件上傳，支援傳入參數", description = "單一文件上傳，支援傳入參數")
     public String uploadFileSingle(@RequestParam("dir") String dir, @RequestParam("file") MultipartFile uploadfile) {
         return FileTransUtil.uploadFile(uploadfile, dir);
     }
 
     @PostMapping("/upload/single/model")
-    @Operation(summary = "", description = "單一文件上傳，支援傳入參數、Model")
+    @Operation(summary = "單一文件上傳，支援傳入參數、Model", description = "單一文件上傳，支援傳入參數、Model")
     public String singleUploadFileModel(@ModelAttribute("model") SingleUploadModel model) {
         return FileTransUtil.uploadFile(model.getFile(), model.getDir());
     }
 
     @PostMapping("upload/multiAndparas")
-    @Operation(summary = "", description = "多筆文件上傳，支援傳入參數")
+    @Operation(summary = "多筆文件上傳，支援傳入參數", description = "多筆文件上傳，支援傳入參數")
     public String uploadFileMulti(@RequestParam("dir") String dir, @RequestParam("files") MultipartFile[] uploadfiles) {
         return FileTransUtil.uploadFiles(uploadfiles, dir);
     }
 
     @PostMapping(value = "/upload/multi/model")
-    @Operation(summary = "", description = "多筆文件上傳，支援傳入參數、Model")
+    @Operation(summary = "多筆文件上傳，支援傳入參數、Model", description = "多筆文件上傳，支援傳入參數、Model")
     public String multiUploadFileModel(@ModelAttribute(("model")) MultiUploadModel model) {
         return FileTransUtil.uploadFiles(model.getFiles(), model.getDir());
     }
 
     @GetMapping(value = "/download/get")
-    @Operation(summary = "", description = "Get下載文件")
+    @Operation(summary = "Get下載文件", description = "Get下載文件")
     public ResponseEntity<InputStreamResource> downloadFileGet(@RequestParam String filePath) throws IOException {
         return FileTransUtil.downloadFile(filePath);
     }
 
     @PostMapping(value = "/download/post")
-    @Operation(summary = "", description = "Post下載文件")
+    @Operation(summary = "Post下載文件", description = "Post下載文件")
     public ResponseEntity<InputStreamResource> downloadFilePost(@RequestBody DownloadQo downloadQo) throws IOException {
         return FileTransUtil.downloadFile(downloadQo.getPath());
     }
