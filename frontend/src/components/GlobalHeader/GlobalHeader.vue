@@ -52,7 +52,7 @@ export default {
     theme: {
       type: String,
       required: false,
-      default: 'light'
+      default: 'dark'
     },
     collapsed: {
       type: Boolean,
