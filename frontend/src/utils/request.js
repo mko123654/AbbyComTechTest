@@ -11,7 +11,8 @@ import {
 
 // axios 物件
 const service = axios.create({
-  baseURL: '/api', // api base_url
+  baseURL: '/api', // dev環境用
+  // baseURL: 'https://abby-test-heroku.herokuapp.com/api/', // prod環境用
   timeout: 6000
 })
 

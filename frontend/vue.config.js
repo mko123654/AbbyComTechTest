@@ -90,6 +90,7 @@ module.exports = {
     }
   },
 
+  // proxy僅在dev環境有效，請勿在prod環境使用
   devServer: {
     // development server port 8000
     port: 8000,
