@@ -1,4 +1,4 @@
-# [Side project] Spring boot + Vue + MySQL 簡易考試網站專案，並部屬於Heroku上【 Abby.com 線上考試系統】
+# [Side project] Spring boot + Vue + MySQL 簡易考試網站專案，並部署於Heroku上【 Abby.com 線上考試系統】
 
 ###### tags: `Java` `Spring Boot` `Vue` `MySQL`
 
